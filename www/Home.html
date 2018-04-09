@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link href="//fonts.googleapis.com/css?family=Tangerine:400,700" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+	<!-- //online-fonts -->
+		<script src="js/jquery.min.js"></script>
+	  <script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>	
+
+	<script type="text/javascript">
+if(localStorage.getItem("Code") == null){
+	window.location.href = "login.html";
+}
+</script>
+<style type="text/css">
+	body{
+		 background:url(../img/back1.png);
+	}
+</style>
+
+</head>
+<body>
+		<div id="loading" class="loader">	
+	</div>
+<div ng-app="myApp" ng-controller="UserDetails">
+	
+
+	<div class="text-center" >
+
+			<div class="bs-component" style="margin-bottom: 15px;">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              	  <label class="btn btn-primary ">
+                <span  class="btn btn-primary active" ng-click="Home()"><i class="fa fa-3x">{{aCode}}</i></span>
+                </label>
+              
+                <label class="btn btn-primary">
+                 	<a href="" class="btn btn-primary"  ng-click="LogOut()"><i class="fa-power-off fa fa-3x"></i></a>
+                </label>
+                <label class="btn btn-primary">
+              <a href="ChangePassword.html" class="btn btn-primary" ng-click="ChangePassword()"><i class="fa-cog fa fa-3x"></i></a>
+                </label>
+              </div>
+     		 </div>
+
+     	
+
+			
+				<div class="bs-component">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+
+							<h4 class="alert alert-success">{{ today | date : "fullDate"}}</h4>
+								<div class="text-center">
+								<img src="img/logo.png"  width="170px">
+							</div>
+						</div>
+						<div class="panel-body m-5" >
+ 							<label class="btn btn-block btn-primary ">
+								<a href="SearchParty.html" type="button" class="btn btn-block btn-primary">Search Party</a>
+							</label>
+							<br><label class="btn btn-block btn-primary ">
+								<a type="button" class="btn btn-block btn-primary">Message to Party</a>
+							</label>
+							<br><label class="btn btn-block btn-primary ">
+								<a type="button" class="btn btn-block btn-primary">Activate Party</a>
+							</label>
+							<br><label class="btn btn-block btn-primary ">
+								<a type="button" class="btn btn-block btn-primary">Deactivate Party</a>
+							</label>
+						</div>
+					</div>
+				</div>	
+		
+	
+
+	</div>
+
+         
+	
+	<script>
+		var app = angular.module('myApp', []);
+		app.controller('UserDetails', function($scope, $http) {
+		 $scope.today = new Date();
+		$scope.aCode = localStorage.getItem("Code");
+			// var q = "select ControlNo,tblStaffMaster.Name,Mobileno,TicketNo,QuarterNo,StreetNo,tblQuarter.Code,tblArea.Name as AreaName from tblStaffMaster inner join tblQuarter on tblStaffMaster.Code = tblQuarter.Staffid inner join tblArea on tblArea.Code = tblQuarter.AreaID where tblQuarter.Status = 1 and tblStaffMaster.Code = "+localStorage.getItem("Code");
+			// $http.get(localStorage.getItem("serverpath")+"staffdata.php?Code=execute&q="+q)
+			// .then(function (response) {
+			// 	$scope.details = response.data.result; 
+			// 	localStorage.setItem("quaterid",response.data.result[0].Code);
+					
+			// 	});
+		
+			 $scope.LogOut = function () {
+				 localStorage.removeItem("Code");
+				 window.location.href= "login.html";
+   			 }
+   			 $scope.ChangePassword = function () {
+				 window.location.href= "ChangePassword.html";
+   			 }
+   			 $scope.Home = function () {
+				 window.location.href= "Home.html";
+   			 }
+		});
+
+
+	</script>
+
+<script type="text/javascript" src="js/sc_index.js"></script>
+</div>
+</body>
+</html>
