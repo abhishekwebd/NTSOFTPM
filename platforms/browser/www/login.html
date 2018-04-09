@@ -71,7 +71,7 @@ if(localStorage.getItem("Code") != null ){
 			</div>
 			<!--//header-->
 			<div class="main-content-agile">
-				<div class="sub-main-w3" style="background:rgba(78, 77, 77, 0.22);">
+				<div class="sub-main-w3" style="background:rgba(183, 179, 179, 0.22);">
 					<img src="img/logo.png" style="width:50%; border: 0px; border-radius: 0;" alt=""  />
 					<!-- <h2>Login</h2> -->
 				<br><br>
@@ -109,12 +109,12 @@ if(localStorage.getItem("Code") != null ){
 	app.controller('RecordCtrl', function ($scope, $http) {
   
     $scope.Login = function () {
-	alert("login clicked");
+	
         http = localStorage.getItem("serverpath")+"staffdata.php?Code=logincheck&username="+$scope.vendorid+"&password="+$scope.password;//the REST service Server to fetch the day stock 
-        alert(http);
+        
         $http.get(http)
             .then(function (response) {$scope.names = response.data.d; 
-            	alert(response.data.d[0].Code );
+            
             	if(response.data.d[0].Code != '0')
             	{
             		localStorage.setItem("Code",response.data.d[0].Code);

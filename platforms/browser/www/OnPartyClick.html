@@ -27,12 +27,13 @@ if(localStorage.getItem("Code") == null){
 
 </head>
 <body>
-	<div id="loading" class="loader">	
+		<div id="loading" class="loader">	
 	</div>
 <div ng-app="myApp" ng-controller="UserDetails">
 	
 
-	<div class=" text-center" >
+	<div class="text-center" >
+
 			<div class="bs-component" style="margin-bottom: 15px;">
               <div class="btn-group btn-group-toggle" data-toggle="buttons">
               	  <label class="btn btn-primary ">
@@ -56,49 +57,18 @@ if(localStorage.getItem("Code") == null){
 						<div class="panel-heading">
 
 							<h4 class="alert alert-success">{{ today | date : "fullDate"}}</h4>
-							
+								<div class="text-center">
+								<img src="img/logo.png"  width="170px">
+							</div>
 						</div>
-						<div class="panel-body" >
-							
-								<div class="input-group">
-									<input type="text" class="form-control" ng-model="searchtext" placeholder="Search Text">
-									
-									<select ng-model="searchoption">
-										<option value="" selected="selected" disabled="">Select Search Type</option>
-										<option value="tblduonlinepartydetail.PartyName" >Party Name</option>
-										<option value="tblduonlinepartydetail2.productname">Product Name</option>
-										<option value="tblduonlinepartydetail.PartyCode">Party Code</option>
-										<option value="tblduonlinepartydetail.ClientCode">Vendor Code</option>
-									</select>
-									<span class="input-group-btn">
-										<button class="btn btn-danger" type="button" ng-click="Search()">Go!</button>
-									</span>
-								</div>
-						<div style="overflow: scroll; max-height: 400px;">
-				
-							<table class="table table-hover">
-									<thead class="alert-success alert">
-										<tr>
-											<th scope="col">Srno</th>
-											<th scope="col">Party Name</th>
-											<th scope="col">No of firm </th>
-											<th scope="col">Product Name</th>
-										</tr>
-									</thead>
-									<tbody class="bg-white" ng-repeat="x in details">
-										<tr>
-											<th scope="row">{{$index + 1}}</th>
-											<td><a ng-click="GetFirm(x.PartyCode)" style="color: blue;">{{ x.PartyName }}</a></td>
-											<td>{{ x.NoOfFirm }}</td>
-											<td>{{ x.productname }}</td>
-										</tr>
-										
-									</tbody>
-							</table>
-
-						</div>
-								
-
+						<div class="panel-body m-5" >
+ 							<label class="btn btn-block btn-primary ">
+								<a href="FirmDetail.html" type="button" class="btn btn-block btn-primary">View Firm Detail</a>
+							</label>
+							<br><label class="btn btn-block btn-primary ">
+								<a type="button" class="btn btn-block btn-primary">View Product Detail</a>
+							</label>
+						
 						</div>
 					</div>
 				</div>	
@@ -114,22 +84,14 @@ if(localStorage.getItem("Code") == null){
 		app.controller('UserDetails', function($scope, $http) {
 		 $scope.today = new Date();
 		$scope.aCode = localStorage.getItem("Code");
-		$scope.searchtext = "";
-
-			$scope.Search = function () {
+			// var q = "select ControlNo,tblStaffMaster.Name,Mobileno,TicketNo,QuarterNo,StreetNo,tblQuarter.Code,tblArea.Name as AreaName from tblStaffMaster inner join tblQuarter on tblStaffMaster.Code = tblQuarter.Staffid inner join tblArea on tblArea.Code = tblQuarter.AreaID where tblQuarter.Status = 1 and tblStaffMaster.Code = "+localStorage.getItem("Code");
+			// $http.get(localStorage.getItem("serverpath")+"staffdata.php?Code=execute&q="+q)
+			// .then(function (response) {
+			// 	$scope.details = response.data.result; 
+			// 	localStorage.setItem("quaterid",response.data.result[0].Code);
+					
+			// 	});
 		
-		var q = "select distinct tblduonlinepartydetail.Sysid,tblduonlinepartydetail.PartyCode,tblduonlinepartydetail.PartyName,tblduonlinepartydetail.NoOfFirm ,tblduonlinepartydetail2.productname from tblduonlinepartydetail inner join tblduonlinepartydetail2 on tblduonlinepartydetail.partycode = tblduonlinepartydetail2.partycode where "+$scope.searchoption+" like '%"+$scope.searchtext+"%'";	
-				
-			$http.get(localStorage.getItem("serverpath")+"staffdata.php?Code=execute&q="+q)
-			.then(function (response) {
-				$scope.details = response.data.result; 
-				
-				});
-   			 }
-   			  $scope.GetFirm = function (PartyCode) {
-				 sessionStorage.setItem("PartyCode",PartyCode);
-				 window.location.href= "OnPartyClick.html";
-			 }
 			 $scope.LogOut = function () {
 				 localStorage.removeItem("Code");
 				 window.location.href= "login.html";
@@ -141,6 +103,8 @@ if(localStorage.getItem("Code") == null){
 				 window.location.href= "Home.html";
    			 }
 		});
+
+
 	</script>
 
 <script type="text/javascript" src="js/sc_index.js"></script>
