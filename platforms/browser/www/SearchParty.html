@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link href="//fonts.googleapis.com/css?family=Tangerine:400,700" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+	<!-- //online-fonts -->
+		<script src="js/jquery.min.js"></script>
+	  <script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>	
+
+	<script type="text/javascript">
+if(localStorage.getItem("Code") == null){
+	window.location.href = "login.html";
+}
+</script>
+<style type="text/css">
+	body{
+		 background:url(../img/back1.png);
+	}
+</style>
+
+</head>
+<body>
+	<div id="loading" class="loader">	
+	</div>
+<div ng-app="myApp" ng-controller="UserDetails">
+	
+
+	<div class=" text-center" >
+			<div class="bs-component" style="margin-bottom: 15px;">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              	  <label class="btn btn-primary ">
+                <span  class="btn btn-primary active" ng-click="Home()"><i class="fa fa-3x">{{aCode}}</i></span>
+                </label>
+              
+                <label class="btn btn-primary">
+                 	<a href="" class="btn btn-primary"  ng-click="LogOut()"><i class="fa-power-off fa fa-3x"></i></a>
+                </label>
+                <label class="btn btn-primary">
+              <a href="ChangePassword.html" class="btn btn-primary" ng-click="ChangePassword()"><i class="fa-cog fa fa-3x"></i></a>
+                </label>
+              </div>
+     		 </div>
+
+     	
+
+			
+				<div class="bs-component">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+
+							<h4 class="alert alert-success">{{ today | date : "fullDate"}}</h4>
+							
+						</div>
+						<div class="panel-body" >
+							
+								<div class="input-group">
+									<input type="text" class="form-control" ng-model="searchtext" placeholder="Search Text">
+									
+									<select ng-model="searchoption">
+										<option value="" selected="selected" disabled="">Select Search Type</option>
+										<option value="PartyName" >Party Name</option>
+										<option value="PartyCode">Party Code</option>
+										<option value="ClientCode">Vendor Code</option>
+									</select>
+									<span class="input-group-btn">
+										<button class="btn btn-danger" type="button" ng-click="Search()">Go!</button>
+									</span>
+								</div>
+						<div style="overflow: scroll; max-height: 400px;">
+							
+							<table class="table table-hover">
+									<thead class="alert-success alert">
+										<tr>
+											<th scope="col">Srno</th>
+											<th scope="col">Party Code</th>
+											<th scope="col">Party Name</th>
+											<th scope="col">No of firm </th>
+											<th scope="col">Module Name</th>
+										</tr>
+									</thead>
+									<tbody class="bg-white" ng-repeat="x in details">
+										<tr>
+											<th scope="row">{{$index + 1}}</th>
+											<td><a ng-click="GetFirm(x.PartyCode)">{{ x.PartyCode }}</a></td>
+											<td>{{ x.PartyName }}</td>
+											<td>{{ x.NoOfFirm }}</td>
+											<td>{{ x.ModuleName }}</td>
+										</tr>
+										
+									</tbody>
+								</table>
+
+						</div>
+								
+
+						</div>
+					</div>
+				</div>	
+		
+	
+
+	</div>
+
+         
+	
+	<script>
+		var app = angular.module('myApp', []);
+		app.controller('UserDetails', function($scope, $http) {
+		 $scope.today = new Date();
+		$scope.aCode = localStorage.getItem("Code");
+		$scope.searchtext = "";
+
+			$scope.Search = function () {
+		
+		var q = "select Sysid,PartyCode,PartyName,NoOfFirm,ModuleName from tblduonlinepartydetail where "+$scope.searchoption+" like '%"+$scope.searchtext+"%'";	
+				
+			$http.get(localStorage.getItem("serverpath")+"staffdata.php?Code=execute&q="+q)
+			.then(function (response) {
+				$scope.details = response.data.result; 
+				
+				});
+   			 }
+   			  $scope.GetFirm = function (PartyCode) {
+				 sessionStorage.setItem("PartyCode",PartyCode);
+				 window.location.href= "FirmDetail.html";
+			 }
+			 $scope.LogOut = function () {
+				 localStorage.removeItem("Code");
+				 window.location.href= "login.html";
+   			 }
+   			 $scope.ChangePassword = function () {
+				 window.location.href= "ChangePassword.html";
+   			 }
+   			 $scope.Home = function () {
+				 window.location.href= "Home.html";
+   			 }
+		});
+	</script>
+
+<script type="text/javascript" src="js/sc_index.js"></script>
+</div>
+</body>
+</html>
