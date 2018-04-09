@@ -114,7 +114,7 @@ if(localStorage.getItem("Code") == null){
 
 			$scope.Search = function () {
 		
-		var q = "select distinct tblduonlinepartydetail.Sysid,tblduonlinepartydetail.PartyCode,tblduonlinepartydetail.PartyName,tblduonlinepartydetail.NoOfFirm ,tblduonlinepartydetail2.productname from tblduonlinepartydetail inner join tblduonlinepartydetail2 on tblduonlinepartydetail.partycode = tblduonlinepartydetail2.partycode where "+$scope.searchoption+" like '%"+$scope.searchtext+"%'";	
+		var q = "select distinct tblduonlinepartydetail.Sysid,tblduonlinepartydetail.PartyCode,tblduonlinepartydetail.PartyName,tblduonlinepartydetail.NoOfFirm ,tblduonlinepartydetail2.productname from tblduonlinepartydetail inner join tblduonlinepartydetail2 on tblduonlinepartydetail.partycode = tblduonlinepartydetail2.partycode where "+$scope.searchoption+" like '%"+$scope.searchtext+"%' order by tblduonlinepartydetail.PartyName";	
 				
 			$http.get(localStorage.getItem("serverpath")+"staffdata.php?Code=execute&q="+q)
 			.then(function (response) {
