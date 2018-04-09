@@ -65,37 +65,36 @@ if(localStorage.getItem("Code") == null){
 									
 									<select ng-model="searchoption">
 										<option value="" selected="selected" disabled="">Select Search Type</option>
-										<option value="PartyName" >Party Name</option>
-										<option value="PartyCode">Party Code</option>
-										<option value="ClientCode">Vendor Code</option>
+										<option value="tblduonlinepartydetail.PartyName" >Party Name</option>
+										<option value="tblduonlinepartydetail2.productname">Product Name</option>
+										<option value="tblduonlinepartydetail.PartyCode">Party Code</option>
+										<option value="tblduonlinepartydetail.ClientCode">Vendor Code</option>
 									</select>
 									<span class="input-group-btn">
 										<button class="btn btn-danger" type="button" ng-click="Search()">Go!</button>
 									</span>
 								</div>
 						<div style="overflow: scroll; max-height: 400px;">
-							
+				
 							<table class="table table-hover">
 									<thead class="alert-success alert">
 										<tr>
 											<th scope="col">Srno</th>
-											<th scope="col">Party Code</th>
 											<th scope="col">Party Name</th>
 											<th scope="col">No of firm </th>
-											<th scope="col">Module Name</th>
+											<th scope="col">Product Name</th>
 										</tr>
 									</thead>
 									<tbody class="bg-white" ng-repeat="x in details">
 										<tr>
 											<th scope="row">{{$index + 1}}</th>
-											<td><a ng-click="GetFirm(x.PartyCode)">{{ x.PartyCode }}</a></td>
-											<td>{{ x.PartyName }}</td>
+											<td><a ng-click="GetFirm(x.PartyCode)" style="color: blue;">{{ x.PartyName }}</a></td>
 											<td>{{ x.NoOfFirm }}</td>
-											<td>{{ x.ModuleName }}</td>
+											<td>{{ x.productname }}</td>
 										</tr>
 										
 									</tbody>
-								</table>
+							</table>
 
 						</div>
 								
@@ -119,7 +118,7 @@ if(localStorage.getItem("Code") == null){
 
 			$scope.Search = function () {
 		
-		var q = "select Sysid,PartyCode,PartyName,NoOfFirm,ModuleName from tblduonlinepartydetail where "+$scope.searchoption+" like '%"+$scope.searchtext+"%'";	
+		var q = "select distinct tblduonlinepartydetail.Sysid,tblduonlinepartydetail.PartyCode,tblduonlinepartydetail.PartyName,tblduonlinepartydetail.NoOfFirm ,tblduonlinepartydetail2.productname from tblduonlinepartydetail inner join tblduonlinepartydetail2 on tblduonlinepartydetail.partycode = tblduonlinepartydetail2.partycode where "+$scope.searchoption+" like '%"+$scope.searchtext+"%'";	
 				
 			$http.get(localStorage.getItem("serverpath")+"staffdata.php?Code=execute&q="+q)
 			.then(function (response) {
@@ -129,7 +128,7 @@ if(localStorage.getItem("Code") == null){
    			 }
    			  $scope.GetFirm = function (PartyCode) {
 				 sessionStorage.setItem("PartyCode",PartyCode);
-				 window.location.href= "FirmDetail.html";
+				 window.location.href= "OnPartyClick.html";
 			 }
 			 $scope.LogOut = function () {
 				 localStorage.removeItem("Code");
