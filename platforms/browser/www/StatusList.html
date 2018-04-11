@@ -63,42 +63,7 @@ if(localStorage.getItem("Code") == null){
 						<div ng-repeat="x in details">
 							<a href="#" type="button" class="btn btn-block btn-primary" ng-click="StatusClick(x.StatusID)">{{x.StatusName}}</a>
 						</div>
-						<!-- <table class="table" border="0">
-								<tr>
-								<td>
-									<button href="#" type="button" class="btn btn-primary" ng-click="StatusClick(8)">Block Firm</button>
-								</td>
-							
-								<td>
-									<button href="#" type="button" class="btn btn-primary" ng-click="StatusClick(9)">Block Party</button>
-								</td>
-
-							</tr>
-							<tr>
-								<td>
-									<button href="#" type="button" class="btn btn-primary" ng-click="StatusClick(2)">AMC Reminder</button>
-								</td>
-								<td>
-									<button href="#" type="button" class="btn btn-primary" ng-click="StatusClick(5)">Payment Due</button>
-								</td>
-							</tr>
-
-							<tr>
-								<td>
-									<button href="#" type="button" class="btn btn-primary" ng-click="StatusClick(6)">Festival Message</button>
-								</td>
-								<td>
-									<button href="#" type="button" class="btn btn-primary" ng-click="StatusClick(7)">New Year Block</button>
-								</td>
-							</tr>
 						
-							<tr>
-								<td colspan="2">
-									<button href="#" type="button" class="btn btn-primary" ng-click="StatusClick(10)">Block Firm Assessment Year</button>
-								</td>
-							</tr>
-						</table> -->
- 						
 						</div>
 					</div>
 				</div>	
@@ -126,6 +91,14 @@ if(localStorage.getItem("Code") == null){
    			 }
  			$scope.StatusClick = function (Statusid) {
 				 sessionStorage.setItem("Statusid",Statusid);
+				 if(Statusid == 8 || Statusid == 10)
+				 {
+
+				 }
+				 else
+				 {
+				 	 window.location.href= "MsgtoParty.html";
+				 }
 				
    			 }
    			 $scope.ChangePassword = function () {

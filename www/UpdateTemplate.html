@@ -58,18 +58,12 @@ if(localStorage.getItem("Code") == null){
 							</div>
 						</div>
 						<div class="panel-body m-5" >
- 							<label class="btn btn-block btn-primary ">
-								<a href="SearchParty.html" type="button" class="btn btn-block btn-primary">Search Party</a>
-							</label>
-							<br><label class="btn btn-block btn-primary ">
-								<a type="button" href="MsgOptions.html" class="btn btn-block btn-primary">Message to Party</a>
-							</label>
-							<br><label class="btn btn-block btn-primary ">
-								<a type="button" class="btn btn-block btn-primary">Activate Party</a>
-							</label>
-							<br><label class="btn btn-block btn-primary ">
-								<a type="button" class="btn btn-block btn-primary">Deactivate Party</a>
-							</label>
+ 					
+							<textarea class="form-control" rows="5" ng-model="txtTemp">
+						
+							</textarea>
+							<br>
+							<button class="btn btn-warning btn-block" ng-click="Update()"> Update </button>
 						</div>
 					</div>
 				</div>	
@@ -85,13 +79,12 @@ if(localStorage.getItem("Code") == null){
 		app.controller('UserDetails', function($scope, $http) {
 		 $scope.today = new Date();
 		$scope.aCode = localStorage.getItem("Code");
-			// var q = "select ControlNo,tblStaffMaster.Name,Mobileno,TicketNo,QuarterNo,StreetNo,tblQuarter.Code,tblArea.Name as AreaName from tblStaffMaster inner join tblQuarter on tblStaffMaster.Code = tblQuarter.Staffid inner join tblArea on tblArea.Code = tblQuarter.AreaID where tblQuarter.Status = 1 and tblStaffMaster.Code = "+localStorage.getItem("Code");
-			// $http.get(localStorage.getItem("serverpath")+"staffdata.php?Code=execute&q="+q)
-			// .then(function (response) {
-			// 	$scope.details = response.data.result; 
-			// 	localStorage.setItem("quaterid",response.data.result[0].Code);
-					
-			// 	});
+			 var q = "select Temp from MsgTemplate where Trmd = "+sessionStorage.getItem("Statusid");
+			
+			$http.get(localStorage.getItem("serverpath")+"staffdata.php?Code=execute&q="+q)
+			.then(function (response) {
+				$scope.txtTemp = response.data.result[0].Temp; 
+				});
 		
 			 $scope.LogOut = function () {
 				 localStorage.removeItem("Code");
@@ -102,6 +95,11 @@ if(localStorage.getItem("Code") == null){
    			 }
    			 $scope.Home = function () {
 				 window.location.href= "Home.html";
+   			 }
+   			  $scope.Update = function () {
+				 q = "update MsgTemplate set Temp = '"+$scope.txtTemp+"' where Trmd = "+sessionStorage.getItem("Statusid");
+				 $http.get(localStorage.getItem("serverpath")+"staffdata.php?Code=execute&q="+q);
+				 window.location.href= "MsgtoParty.html";
    			 }
 		});
 
